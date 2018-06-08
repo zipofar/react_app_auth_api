@@ -4,12 +4,13 @@ import { Redirect } from 'react-router-dom';
 
 export default class Login extends React.Component {
 
-	state = {login: '', password: '', wrongPass: false}
+	state = {login: '', password: '', wrongPass: false, redirectToPreviosRoute: false}
 
 	handleSubmit = (e) => {
 		e.preventDefault();
 
 		if (checkLoginPass(this.state.login, this.state.password)) {
+			this.setState({ redirectToPreviosRoute: true });
 			this.props.dispatch(setLogin());
 		} else {
 			this.setState({ wrongPass: true });
@@ -32,8 +33,14 @@ export default class Login extends React.Component {
 	}
 
 	render() {
-		return this.props.isLogin ? (<Redirect to={{ ...this.props.location.state.refferer }} />) :
-		(
+		if (this.state.redirectToPreviosRoute) {
+			return <Redirect to={{ ...this.props.location.state.refferer }} />
+		}
+		if (this.props.isLogin) {
+			return <Redirect to="/" />
+		}
+
+		return(
 			<div>
 				<form onSubmit={this.handleSubmit}>
 				<label>
