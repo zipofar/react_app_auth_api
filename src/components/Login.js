@@ -1,5 +1,6 @@
 import React from 'react';
 import { checkLoginPass, setLogin } from '../actions';
+import { Redirect } from 'react-router-dom';
 
 export default class Login extends React.Component {
 
@@ -31,7 +32,8 @@ export default class Login extends React.Component {
 	}
 
 	render() {
-		return(
+		return this.props.isLogin ? (<Redirect to={{ ...this.props.location.state.refferer }} />) :
+		(
 			<div>
 				<form onSubmit={this.handleSubmit}>
 				<label>

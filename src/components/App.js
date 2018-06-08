@@ -1,26 +1,26 @@
 import React from 'react';
-import { Route, Link, Redirect } from 'react-router-dom';
-import Footer from './Footer';
+import { Route, Switch, Redirect } from 'react-router-dom';
+import Menu from './Menu';
 import Login from '../containers/Login';
+import PrivateRoute from '../containers/PrivateRoute';
 import Profile from './Profile';
 import News from './News';
 import Main from './Main';
+import NotFound from './NotFound';
 
 export default class App extends React.Component
 {
 	render() {
 		return(
 			<div>
-				<Footer />
-				<Route exact path="/" component={Main} />
-				<Route exact path="/main" component={Main} />
-				<Route exact path="/login" render={() => (
-					this.props.isLogin ? <Redirect to="/profile" /> : <Login />
-				)} />
-				<Route exact path="/news" component={News} />
-				<Route exact path="/profile" render={() => (
-					this.props.isLogin ? <Profile /> : <Redirect to="/login" />		
-				)} />
+				<Menu />
+				<Switch>
+					<Route exact path="/" component={Main} />
+					<Route exact path="/login" component={Login} />
+					<Route exact path="/news" component={News} />
+					<PrivateRoute path="/profile" component={Profile} />
+					<Route component={NotFound} />
+				</Switch>
 			</div>
 		);
 	}
