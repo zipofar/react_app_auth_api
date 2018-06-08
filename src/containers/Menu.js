@@ -1,6 +1,6 @@
 import { connect } from 'react-redux';
-import Login from '../components/Login';
-import { logIn } from '../actions';
+import Menu from '../components/Menu';
+import { logOut } from '../actions';
 
 const mapStateToProps = state => {
 	return {
@@ -10,10 +10,10 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
 	return {
-		logIn: () => dispatch(logIn()),
+		logOut: () => dispatch(logOut()),
 	};
 };
 
-const container = connect(mapStateToProps, mapDispatchToProps)(Login);
+const container = connect(mapStateToProps, mapDispatchToProps)(Menu);
 
 export default container;

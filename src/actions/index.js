@@ -1,10 +1,13 @@
 export const checkLoginPass = (login, password) => {
-	if (login == 'Admin' && password == '12345') {
-		localStorage.setItem('isLogin', true);
-		return true;
-	}
-	return false;
+	return login == 'Admin' && password == '12345';
 };
 
-export const setLogin = () => ({type: 'LOGIN'});
-export const setLogout = () => ({type: 'LOGOUT'});
+export const logIn = () => {
+	localStorage.setItem('isLogin', true);
+	return {type: 'LOGIN'};
+};
+
+export const logOut = () => {
+	localStorage.removeItem('isLogin');
+	return {type: 'LOGOUT'};
+};

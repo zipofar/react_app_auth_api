@@ -12,7 +12,12 @@ export default class Menu extends React.Component {
 							<Link to={'/news'} className="button">Новости</Link>
 							<Link to={'/profile'}	className="button">Профиль</Link>
 							<Link to={'/404'}	className="button">404</Link>
-							<Link to={'/login'}	className="button">Login</Link>
+							{ this.props.isLogin
+								?
+								<button onClick={this.props.logOut}>Logout</button>
+								:
+								<Link to={'/login'} className="button">Login</Link>
+							}
 						</header>
 					</div>
 				</div>

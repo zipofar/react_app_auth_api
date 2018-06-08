@@ -1,5 +1,5 @@
 import React from 'react';
-import { checkLoginPass, setLogin } from '../actions';
+import { checkLoginPass } from '../actions';
 import { Redirect } from 'react-router-dom';
 
 export default class Login extends React.Component {
@@ -11,7 +11,7 @@ export default class Login extends React.Component {
 
 		if (checkLoginPass(this.state.login, this.state.password)) {
 			this.setState({ redirectToPreviosRoute: true });
-			this.props.dispatch(setLogin());
+			this.props.logIn();
 		} else {
 			this.setState({ wrongPass: true });
 		}

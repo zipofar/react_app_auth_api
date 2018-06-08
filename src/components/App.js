@@ -1,6 +1,6 @@
 import React from 'react';
 import { Route, Switch, Redirect } from 'react-router-dom';
-import Menu from './Menu';
+import Menu from '../containers/Menu';
 import Login from '../containers/Login';
 import PrivateRoute from '../containers/PrivateRoute';
 import Profile from './Profile';
