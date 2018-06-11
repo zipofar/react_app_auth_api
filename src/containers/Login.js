@@ -1,19 +1,14 @@
 import { connect } from 'react-redux';
 import Login from '../components/Login';
-import { logIn } from '../actions';
+import * as actions from '../actions';
 
 const mapStateToProps = state => {
 	return {
 		isLogin: state.isLogin,
+        stateProcessLogin: state.stateProcessLogin,
 	};
 };
 
-const mapDispatchToProps = dispatch => {
-	return {
-		logIn: () => dispatch(logIn()),
-	};
-};
-
-const container = connect(mapStateToProps, mapDispatchToProps)(Login);
+const container = connect(mapStateToProps, actions)(Login);
 
 export default container;
