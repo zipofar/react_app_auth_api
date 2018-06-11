@@ -5,16 +5,21 @@ const loginSuccess = () => ({ type: 'LOGIN_SUCCESS' });
 const loginFailure = () => ({ type: 'LOGIN_FAILURE' });
 const logIn = () => ({type: 'LOGIN'});
 export const logOut = () => ({type: 'LOGOUT'});
+const loadProfile = (data) => {
+    return {
+        type: 'LOAD_PROFILE',
+        payload: data,
+    };
+};
 
 export const checkLoginPass = (email, password) => async (dispatch) => {
     dispatch(loginRequest());
     try {
         const response = await axios.post('/api/login', { email, password });
-        console.log(response)
         dispatch(loginSuccess());
         dispatch(logIn());
+        dispatch(loadProfile(response.data));
     } catch (e) {
-        console.log(e.response.data)
         dispatch(loginFailure());
     }
 };

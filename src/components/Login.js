@@ -3,23 +3,12 @@ import { Redirect } from 'react-router-dom';
 
 export default class Login extends React.Component {
 
-	state = {login: '', password: '', wrongPass: false }
+	state = { login: '', password: '' }
 
 	handleSubmit = (e) => {
 		e.preventDefault();
         const { login, password } = this.state;
 		this.props.checkLoginPass(login, password);
-/*
-        if (this.props.isLogin) {
-			this.setState({ redirectToPreviosRoute: true });
-        }
-       /* 
-		if (checkLoginPass(this.state.login, this.state.password)) {
-			this.setState({ redirectToPreviosRoute: true });
-		} else {
-			this.setState({ wrongPass: true });
-		}
-*/
 	}
 
 	handleChange = (e) => {

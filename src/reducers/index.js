@@ -1,8 +1,6 @@
 import { combineReducers } from 'redux';
 
-const checkLogin = () => { return localStorage.getItem('isLogin') === 'true' };
-
-const isLogin = (state = checkLogin(), action) => {
+const isLogin = (state = false, action) => {
 	switch (action.type) {
 		case 'LOGIN':
 			return true;
@@ -26,7 +24,17 @@ const stateProcessLogin = (state = '', action) => {
    }
 };
 
+const profile = (state = {}, action) => {
+    switch (action.type) {
+        case 'LOAD_PROFILE':
+            return action.payload;
+        default:
+            return state;
+    }    
+};
+
 export default combineReducers({
 	isLogin,
     stateProcessLogin,
+    profile,
 });
