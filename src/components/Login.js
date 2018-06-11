@@ -33,8 +33,10 @@ export default class Login extends React.Component {
 	}
 
 	render() {
+        const { refferer } = this.props.location.state || { refferer: { pathname: '/' } };
+
 		if (this.state.redirectToPreviosRoute) {
-			return <Redirect to={{ ...this.props.location.state.refferer }} />
+			return <Redirect to={ refferer } />
 		}
 		if (this.props.isLogin) {
 			return <Redirect to="/" />
