@@ -24,10 +24,36 @@ const stateProcessLogin = (state = '', action) => {
    }
 };
 
+const stateProcessRegister = (state = '', action) => {
+   switch (action.type) {
+       case 'REGISTER_REQUEST':
+           return 'request';
+        case 'REGISTER_SUCCESS':
+           return 'success';
+        case 'REGISTER_FAILURE':
+           return 'failure';
+        default:
+           return state;
+   }
+};
+
 const profile = (state = {}, action) => {
     switch (action.type) {
         case 'LOAD_PROFILE':
             return action.payload;
+        case 'LOGOUT':
+            return {};
+        default:
+            return state;
+    }    
+};
+
+const registerErrors = (state = [], action) => {
+    switch (action.type) {
+        case 'ADD_ERRORS':
+            return action.payload;
+        case 'REMOVE_ERRORS':
+            return [];
         default:
             return state;
     }    
@@ -37,4 +63,6 @@ export default combineReducers({
 	isLogin,
     stateProcessLogin,
     profile,
+    stateProcessRegister,
+    registerErrors,
 });

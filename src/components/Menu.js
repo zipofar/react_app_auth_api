@@ -18,7 +18,6 @@ export default class Menu extends React.Component {
 								:
 								<Link to={'/login'} className="button">Login</Link>
 							}
-					    	<Link to={'/registration'}	className="button">Регистрация</Link>
 						</header>
 					</div>
 				</div>

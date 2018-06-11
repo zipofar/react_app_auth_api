@@ -1,5 +1,5 @@
 import React from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 export default class Login extends React.Component {
 
@@ -52,6 +52,9 @@ export default class Login extends React.Component {
                         value={this.state.password}
                     />
 					<input type="submit" value="Login" />
+                    <div className="row">
+                        <Link to={'/registration'}>Регистрация</Link>
+                    </div>
 				</form>
 				{wrongCredentials && this.showPanelWrongPassword()}
 			</div>

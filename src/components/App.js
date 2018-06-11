@@ -6,7 +6,7 @@ import PrivateRoute from '../containers/PrivateRoute';
 import Profile from '../containers/Profile';
 import News from './News';
 import Main from './Main';
-import RegistrationForm from './RegistrationForm';
+import RegistrationForm from '../containers/RegistrationForm';
 import NotFound from './NotFound';
 
 export default class App extends React.Component

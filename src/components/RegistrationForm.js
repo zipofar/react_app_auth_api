@@ -3,28 +3,38 @@ import { Redirect } from 'react-router-dom';
 
 export default class RegistrationForm extends React.Component {
 
-	state = { login: '', password: '' }
+	state = { name: '', email: '', password: '' }
 
 	handleSubmit = (e) => {
 		e.preventDefault();
-        const { login, password } = this.state;
+        const { name, email, password } = this.state;
+        this.props.register({ name, email, password });
 	}
 
 	handleChange = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
 	}
 
-	showPanelWrongPassword() {
+	showPanelError = () => {
 		return(
 		    <div className="row">
-			    <div className="card error">
-				    <p>Имя пользователя или пароль введены не верно</p>
-				</div>
+				<div className="col-sm-11 col-sm-offset-1">
+			        <div className="card error">
+                        <ul>
+                        { this.props.registerErrors.map((err, i) => {
+                            return  <li key={i}>{err}</li>
+                        }) }
+                        </ul>
+				    </div>
+                </div>
 			</div>
 		);
 	}
 
 	render() {
+        if (this.props.isLogin) {
+            return <Redirect to="/" />
+        }
 
 		return(
 			<div>
@@ -39,7 +49,7 @@ export default class RegistrationForm extends React.Component {
 								type="text"
 								name="name"
 								onChange={this.handleChange}
-								value={this.state.login}
+								value={this.state.name}
 							/>
 						</div>
                     </div>
@@ -53,7 +63,7 @@ export default class RegistrationForm extends React.Component {
 								type="text"
 								name="email"
 								onChange={this.handleChange}
-								value={this.state.login}
+								value={this.state.email}
 							/>
 						</div>
                     </div>
@@ -72,6 +82,8 @@ export default class RegistrationForm extends React.Component {
 						</div>
 					</div>
                     
+                    { this.props.stateProcessRegister === 'failure' && this.showPanelError() }
+
 					<div className="row">
 						<div className="col-sm-11 col-sm-offset-1">
 							<input type="submit" value="Зарегистрироваться" />
