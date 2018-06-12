@@ -3,12 +3,12 @@ import { Redirect, Link } from 'react-router-dom';
 
 export default class Login extends React.Component {
 
-	state = { login: '', password: '' }
+	state = { email: '', password: '' }
 
 	handleSubmit = (e) => {
 		e.preventDefault();
-        const { login, password } = this.state;
-		this.props.checkLoginPass({ login, password }, () => this.setState({ password: '' }));
+        const { email, password } = this.state;
+		this.props.checkLoginPass({ email, password }, () => this.setState({ password: '' }));
 	}
 
 	handleChange = (e) => {
@@ -38,9 +38,9 @@ export default class Login extends React.Component {
                     <label>Email:</label>
                     <input
                         type="text"
-                        name="login"
+                        name="email"
                         onChange={this.handleChange}
-                        value={this.state.login}
+                        value={this.state.email}
                     />
                     <label>Password:</label>
                     <input
