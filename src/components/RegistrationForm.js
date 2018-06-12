@@ -21,7 +21,7 @@ export default class RegistrationForm extends React.Component {
 				<div className="col-sm-11 col-sm-offset-1">
 			        <div className="card error">
                         <ul>
-                        { this.props.registerErrors.map((err, i) => {
+                        { this.props.authErrors.map((err, i) => {
                             return  <li key={i}>{err}</li>
                         }) }
                         </ul>

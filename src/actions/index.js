@@ -1,4 +1,5 @@
 import axios from 'axios';
+import _ from 'lodash';
 
 const loginRequest = () => ({ type: 'LOGIN_REQUEST' });
 const loginSuccess = () => ({ type: 'LOGIN_SUCCESS' });
@@ -13,38 +14,61 @@ const loadProfile = (data) => {
     };
 };
 
-export const checkLoginPass = (email, password) => async (dispatch) => {
+export const checkLoginPass = (data, cb) => async (dispatch) => {
     dispatch(loginRequest());
     try {
-        const response = await axios.post('/api/login', { email, password });
+        const response = await axios.post('/api/login', data);
         dispatch(loginSuccess());
         dispatch(logIn());
         dispatch(loadProfile(response.data));
+        dispatch(removeAuthErrors());
     } catch (e) {
         dispatch(loginFailure());
+        cb();
+        authHandlerErrors(dispatch, e, ['Имя пользователя или пароль введены не верно']);
+        
     }
 };
 
 const registerRequest = () => ({ type: 'REGISTER_REQUEST' });
 const registerSuccess = () => ({ type: 'REGISTER_SUCCESS' });
 const registerFailure = () => ({ type: 'REGISTER_FAILURE' });
-const addRegisterErrors = (errors) => {
+const addAuthErrors = (errors) => {
     return {
         type: 'ADD_ERRORS',
         payload: errors,
     };
 };
-const removeRegisterErrors = () => ({ type: 'REMOVE_ERRORS' });
+const removeAuthErrors = () => ({ type: 'REMOVE_ERRORS' });
 export const register = (data) => async (dispatch) => {
     dispatch(registerRequest());
     try {
         const response = await axios.post('/api/register', data);
         dispatch(registerSuccess());
-        dispatch(removeRegisterErrors());
+        dispatch(removeAuthErrors());
         dispatch(logIn());
         dispatch(loadProfile(response.data));
     } catch (e) {
         dispatch(registerFailure());
-        dispatch(addRegisterErrors(e.response.data.error));
+        authHandlerErrors(dispatch, e, [],'response.data.error');
+    }
+};
+
+const authHandlerErrors = (dispatch, e, messages = [], path) => {
+
+    if (typeof e.response == 'undefined') {
+        dispatch(addAuthErrors(['Ошибка подключения к сети']));
+        return;
+    }
+    if (e.response.status >= 500) {
+        dispatch(addAuthErrors(['Сервер не доступен']));
+        return;
+    }
+    if (typeof path === 'string') {
+        messages = _.get(e, path, ['Message not found']);
+    }
+    if (e.response.status >= 400) {
+        dispatch(addAuthErrors(messages));
+        return;
     }
 };

@@ -8,18 +8,18 @@ export default class Login extends React.Component {
 	handleSubmit = (e) => {
 		e.preventDefault();
         const { login, password } = this.state;
-		this.props.checkLoginPass(login, password);
+		this.props.checkLoginPass({ login, password }, () => this.setState({ password: '' }));
 	}
 
 	handleChange = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
 	}
 
-	showPanelWrongPassword() {
+	showPanelWrongPassword = () => {
 		return(
 		    <div className="row">
 			    <div className="card error">
-				    <p>Имя пользователя или пароль введены не верно</p>
+				    {this.props.authErrors.map((err, i) => <p key={i}>{err}</p>)}
 				</div>
 			</div>
 		);
@@ -31,8 +31,6 @@ export default class Login extends React.Component {
         if (this.props.isLogin) {
 			return <Redirect to={ refferer } />
         }
-
-        const wrongCredentials = this.props.stateProcessLogin === 'failure' ? true : false;
 
 		return(
 			<div>
@@ -51,12 +49,17 @@ export default class Login extends React.Component {
                         onChange={this.handleChange}
                         value={this.state.password}
                     />
-					<input type="submit" value="Login" />
+					<input
+                        type="submit"
+                        value="Login"
+                        disabled={this.props.stateProcessLogin === 'request'}
+                    />
+            
                     <div className="row">
                         <Link to={'/registration'}>Регистрация</Link>
                     </div>
 				</form>
-				{wrongCredentials && this.showPanelWrongPassword()}
+				{this.props.stateProcessLogin === 'failure' && this.showPanelWrongPassword()}
 			</div>
 		);
 	}
