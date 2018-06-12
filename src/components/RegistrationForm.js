@@ -86,7 +86,11 @@ export default class RegistrationForm extends React.Component {
 
 					<div className="row">
 						<div className="col-sm-11 col-sm-offset-1">
-							<input type="submit" value="Зарегистрироваться" />
+							<input
+                                type="submit"
+                                value="Зарегистрироваться"
+                                disaled={this.props.stateProcessRegister === 'request'}
+                            />
 						</div>
 					</div>
 				</form>

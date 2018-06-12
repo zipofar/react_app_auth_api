@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import { news, processLoadNews } from './news';
 
 const isLogin = (state = false, action) => {
 	switch (action.type) {
@@ -65,4 +66,6 @@ export default combineReducers({
     profile,
     stateProcessRegister,
     authErrors,
+    news,
+    processLoadNews,
 });

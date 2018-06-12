@@ -4,7 +4,7 @@ import Menu from '../containers/Menu';
 import Login from '../containers/Login';
 import PrivateRoute from '../containers/PrivateRoute';
 import Profile from '../containers/Profile';
-import News from './News';
+import News from '../containers/News';
 import Main from './Main';
 import RegistrationForm from '../containers/RegistrationForm';
 import NotFound from './NotFound';
