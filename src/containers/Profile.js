@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import Profile from '../components/Profile';
+import * as actions  from '../actions/profile';
 
 const mapStateToProps = state => {
     return {
@@ -7,4 +8,4 @@ const mapStateToProps = state => {
     };
 };
 
-export default connect(mapStateToProps)(Profile);
+export default connect(mapStateToProps, actions)(Profile);

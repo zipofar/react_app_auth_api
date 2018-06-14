@@ -25,6 +25,7 @@ export const checkLoginPass = (data, cb) => async (dispatch) => {
     } catch (e) {
         dispatch(loginFailure());
         cb();
+        console.log(e.response)
         authHandlerErrors(dispatch, e, ['Имя пользователя или пароль введены не верно']);
         
     }
