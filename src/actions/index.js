@@ -1,5 +1,6 @@
 import axios from 'axios';
 import _ from 'lodash';
+import { loadProfile } from "./profile";
 
 const loginRequest = () => ({ type: 'LOGIN_REQUEST' });
 const loginSuccess = () => ({ type: 'LOGIN_SUCCESS' });
@@ -7,20 +8,15 @@ const loginFailure = () => ({ type: 'LOGIN_FAILURE' });
 const logIn = () => ({type: 'LOGIN'});
 export const logOut = () => ({type: 'LOGOUT'});
 
-const loadProfile = (data) => {
-    return {
-        type: 'LOAD_PROFILE',
-        payload: data,
-    };
-};
+
 
 export const checkLoginPass = (data, cb) => async (dispatch) => {
     dispatch(loginRequest());
     try {
         const response = await axios.post('/api/login', data);
-        dispatch(loginSuccess());
-        dispatch(logIn());
         dispatch(loadProfile(response.data));
+        dispatch(logIn());
+        dispatch(loginSuccess());
         dispatch(removeAuthErrors());
     } catch (e) {
         dispatch(loginFailure());

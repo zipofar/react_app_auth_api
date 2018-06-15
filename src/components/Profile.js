@@ -1,13 +1,22 @@
 import React from 'react';
+import Loader from '../components/Loader';
 
 export default class Profile extends React.Component {
 
-    componentDidUpdate = () => {
+    componentDidMount = () => {
         const { id, api_token } = this.props.profile;
         this.props.getFullProfile(id, api_token);
     };
 
 	render() {
+	    if (this.props.processLoadProfile === 'request') {
+	        return <Loader />;
+        }
+
+        if (this.props.processLoadProfile === 'failure') {
+	        return <div>ERROR</div>
+        }
+
 		return(
             <div>
                 <div className="row responsive-label">
@@ -39,7 +48,7 @@ export default class Profile extends React.Component {
                         <label>Birthday:</label>
                     </div>
                     <div className="col-sm-11">
-                        <p>01.01.1970</p>
+                        <p>{this.props.profile.birthday}</p>
                     </div>
                 </div>
                 <div className="row responsive-label">
@@ -47,7 +56,7 @@ export default class Profile extends React.Component {
                         <label>Country:</label>
                     </div>
                     <div className="col-sm-11">
-                        Russia
+                        {this.props.profile.country}
                     </div>
                 </div>
                 <div className="row responsive-label">
@@ -55,7 +64,7 @@ export default class Profile extends React.Component {
                         <label>Sex:</label>
                     </div>
                     <div className="col-sm-11">
-                        Man
+                        {this.props.profile.sex}
                     </div>
                 </div>
                 <div className="row responsive-label">
@@ -63,7 +72,7 @@ export default class Profile extends React.Component {
                         <label>About:</label>
                     </div>
                     <div className="col-sm-11">
-                        Hello. I am a developer.
+                        {this.props.profile.about}
                     </div>
                 </div>
                 <div className="row responsive-label">

@@ -5,6 +5,7 @@ import * as actions  from '../actions/profile';
 const mapStateToProps = state => {
     return {
         profile: state.profile,
+        processLoadProfile: state.processLoadProfile,
     };
 };
 
