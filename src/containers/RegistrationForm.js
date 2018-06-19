@@ -5,7 +5,7 @@ import * as actions from '../actions';
 const mapStateToProps = state => {
 	return {
 		isLogin: state.isLogin,
-        authErrors: state.authErrors,
+        networkErrors: state.networkErrors,
         stateProcessRegister: state.stateProcessRegister,
 	};
 };

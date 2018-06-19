@@ -9,11 +9,11 @@ export default class RegistrationForm extends React.Component {
 		e.preventDefault();
         const { name, email, password } = this.state;
         this.props.register({ name, email, password });
-	}
+	};
 
 	handleChange = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
-	}
+	};
 
 	showPanelError = () => {
 		return(
@@ -21,7 +21,7 @@ export default class RegistrationForm extends React.Component {
 				<div className="col-sm-11 col-sm-offset-1">
 			        <div className="card error">
                         <ul>
-                        { this.props.authErrors.map((err, i) => {
+                        { this.props.networkErrors.map((err, i) => {
                             return  <li key={i}>{err}</li>
                         }) }
                         </ul>
@@ -29,7 +29,7 @@ export default class RegistrationForm extends React.Component {
                 </div>
 			</div>
 		);
-	}
+	};
 
 	render() {
         if (this.props.isLogin) {
@@ -89,12 +89,12 @@ export default class RegistrationForm extends React.Component {
 							<input
                                 type="submit"
                                 value="Зарегистрироваться"
-                                disaled={this.props.stateProcessRegister === 'request'}
+                                disabled={this.props.stateProcessRegister === 'request'}
                             />
 						</div>
 					</div>
 				</form>
 			</div>
 		);
-	}
+	};
 }

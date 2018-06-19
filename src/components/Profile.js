@@ -1,5 +1,6 @@
 import React from 'react';
 import Loader from '../components/Loader';
+import { Link } from 'react-router-dom';
 
 export default class Profile extends React.Component {
 
@@ -24,7 +25,7 @@ export default class Profile extends React.Component {
                         <label>Avatar:</label>
                     </div>
                     <div className="col-sm-11">
-                        <img src={'/img/user_def_avatar.png'} height={'100'} width={'100'}/>
+                        <img src={this.props.profile.file_path_avatar} alt={'avatar'} height={'100'} width={'100'}/>
                     </div>
                 </div>
                 <div className="row responsive-label">
@@ -77,7 +78,9 @@ export default class Profile extends React.Component {
                 </div>
                 <div className="row responsive-label">
                     <div className="col-sm-11 col-sm-offset-1">
-                        <button>Edit</button>
+                        <Link to='/profile/edit'>
+                            <button>Edit</button>
+                        </Link>
                     </div>
                 </div>
             </div>

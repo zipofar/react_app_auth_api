@@ -1,6 +1,7 @@
 import { combineReducers } from 'redux';
 import { news, processLoadNews } from './news';
-import { processLoadProfile } from "./profile";
+import { processLoadProfile, processUpdateProfile } from "./profile";
+import { reducer as formReducer } from 'redux-form';
 
 const isLogin = (state = false, action) => {
 	switch (action.type) {
@@ -50,7 +51,7 @@ const profile = (state = {}, action) => {
     }    
 };
 
-const authErrors = (state = [], action) => {
+const networkErrors = (state = [], action) => {
     switch (action.type) {
         case 'ADD_ERRORS':
             return action.payload;
@@ -66,8 +67,10 @@ export default combineReducers({
     stateProcessLogin,
     profile,
     stateProcessRegister,
-    authErrors,
+    networkErrors,
     news,
     processLoadNews,
     processLoadProfile,
+    processUpdateProfile,
+    form: formReducer,
 });
