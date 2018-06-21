@@ -19,6 +19,8 @@ export const processUpdateProfile = (state = '', action) => {
             return 'request';
         case 'PROFILE_UPDATE_FAILURE':
             return 'failure';
+        case 'PROFILE_UPDATE_RESET_STATE':
+            return '';
         default:
             return state;
     }

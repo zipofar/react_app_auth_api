@@ -1,9 +1,18 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 import Loader from '../components/Loader';
+import { Link, Redirect } from 'react-router-dom';
 
 class ProfileEditForm extends React.Component
 {
+    componentDidMount = () => {
+        const { id, api_token } = this.props.profile;
+        this.props.getFullProfile(id, api_token);
+    };
+
+    componentWillUnmount = () => {
+        this.props.profileUpdateReset();
+    };
 
     saveProfile = (values) => {
 
@@ -22,18 +31,67 @@ class ProfileEditForm extends React.Component
         this.props.updateProfile(formData);
     };
 
-    render() {
-        if (this.props.processUpdateProfile === 'request') {
-            return <Loader />;
+    showPanelError = () => {
+        const { processUpdateProfile, processLoadProfile } = this.props;
+
+        if (processUpdateProfile === 'failure' || processLoadProfile === 'failure') {
+            return(
+                <div className="row">
+                    <div className="col-sm-11 col-sm-offset-1">
+                        <div className="card error">
+                            <ul>
+                                { this.props.networkErrors.map((err, i) => {
+                                    return  <li key={i}>{err}</li>
+                                }) }
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            );
+        }
+        return null;
+    };
+
+    onChangeCountries = (e) => {
+        this.props.loadCountries(e.target.value);
+    };
+
+    onSelectCountry = (value) => (e) => {
+        this.props.updateProfileLocal({ country: value });
+        this.props.loadCountries('');
+    };
+
+    showCountriesList = () => {
+
+        if (this.props.countries.count === 0) {
+            return null;
         }
 
-        if (this.props.processUpdateProfile === 'failure') {
-            return <div>ERROR</div>
+        return(
+            <div className="row responsive-label">
+                <div className="col-sm-11 col-sm-offset-1">
+                    <nav>
+                        { this.props.countries.map((item, i) => {
+                            return <a onClick={this.onSelectCountry(item)} href="#" key={i}>{item}</a>;
+                        }) }
+                    </nav>
+                </div>
+            </div>
+        );
+    };
+
+    render() {
+        if (this.props.processUpdateProfile === 'success') {
+            return <Redirect to='/profile'/>
+        }
+
+        if (this.props.processUpdateProfile === 'request' || this.props.processLoadProfile === 'request') {
+            return <Loader />;
         }
 
         return(
             <div>
-                <form onSubmit={this.props.handleSubmit(this.saveProfile)}>
+                <form onSubmit={this.props.handleSubmit(this.saveProfile)} autoComplete='off'>
                     <div className="row responsive-label">
                         <div className="col-sm-1 label">
                             <label>Avatar:</label>
@@ -73,15 +131,22 @@ class ProfileEditForm extends React.Component
                             <label>Country:</label>
                         </div>
                         <div className="col-sm-11">
-                            <Field name='country' component='input' type='text' />
+                            <Field
+                                name='country'
+                                component='input'
+                                type='text'
+                                onChange={this.onChangeCountries}
+                            />
                         </div>
                     </div>
+                    { this.showCountriesList() }
                     <div className="row responsive-label">
                         <div className="col-sm-1 label">
                             <label>Sex:</label>
                         </div>
                         <div className="col-sm-11">
-                            <Field name='sex' component='input' type='text' />
+                            <label><Field name="sex" component="input" type="radio" value="male" /> Male</label>
+                            <label><Field name="sex" component="input" type="radio" value="female"/> Female</label>
                         </div>
                     </div>
                     <div className="row responsive-label">
@@ -89,9 +154,12 @@ class ProfileEditForm extends React.Component
                             <label>About:</label>
                         </div>
                         <div className="col-sm-11">
-                            <Field name='about' component='input' type='text' />
+                            <Field name='about' component='textarea' type='text' />
                         </div>
                     </div>
+
+                    { this.showPanelError() }
+
                     <div className="row responsive-label">
                         <div className="col-sm-11 col-sm-offset-1">
                             <button type='submit'>Save</button>
