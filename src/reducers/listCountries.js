@@ -2,6 +2,8 @@ export const countries = (state = [], action) => {
     switch (action.type) {
         case 'ADD_COUNTRIES':
             return action.payload;
+        case 'CLEAR_LIST_COUNTRIES':
+            return [];
         default:
             return state;
     }

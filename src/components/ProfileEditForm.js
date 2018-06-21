@@ -54,11 +54,12 @@ class ProfileEditForm extends React.Component
 
     onChangeCountries = (e) => {
         this.props.loadCountries(e.target.value);
+        this.props.updateProfileLocal({ country: e.target.value });
     };
 
     onSelectCountry = (value) => (e) => {
         this.props.updateProfileLocal({ country: value });
-        this.props.loadCountries('');
+        this.props.clearListCountries();
     };
 
     showCountriesList = () => {

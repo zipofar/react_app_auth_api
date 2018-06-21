@@ -5,6 +5,7 @@ const loadCountriesSuccess = () => ({type: 'LOAD_COUNTRIES_SUCCESS'});
 const loadCountriesRequest = () => ({type: 'LOAD_COUNTRIES_REQUEST'});
 const loadCountriesFailure = () => ({type: 'LOAD_COUNTRIES_FAILURE'});
 const addCountries = (data) => ({type: 'ADD_COUNTRIES', payload: data});
+export const clearListCountries = () => ({type: 'CLEAR_LIST_COUNTRIES'});
 
 export const loadCountries = (partNameCountry) => async (dispatch) => {
     dispatch(loadCountriesRequest());
