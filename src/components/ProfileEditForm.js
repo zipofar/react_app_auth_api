@@ -1,10 +1,12 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 import Loader from '../components/Loader';
-import { Link, Redirect } from 'react-router-dom';
+import Birthday from './ProfileEditForm/Birthday'
+import { Redirect } from 'react-router-dom';
 
 class ProfileEditForm extends React.Component
 {
+
     componentDidMount = () => {
         const { id, api_token } = this.props.profile;
         this.props.getFullProfile(id, api_token);
@@ -55,6 +57,10 @@ class ProfileEditForm extends React.Component
     onChangeCountries = (e) => {
         this.props.loadCountries(e.target.value);
         this.props.updateProfileLocal({ country: e.target.value });
+    };
+
+    onBlurCountryField = () => {
+        setTimeout(this.props.clearListCountries.bind(this), 1);
     };
 
     onSelectCountry = (value) => (e) => {
@@ -124,7 +130,9 @@ class ProfileEditForm extends React.Component
                             <label>Birthday:</label>
                         </div>
                         <div className="col-sm-11">
-                            <Field name='birthday' component='input' type='text' />
+                            <Birthday updateBirthday={(birthday) => this.props.updateProfileLocal({ birthday, })}>
+                                {this.props.initialValues.birthday}
+                             </Birthday>
                         </div>
                     </div>
                     <div className="row responsive-label">
@@ -137,6 +145,7 @@ class ProfileEditForm extends React.Component
                                 component='input'
                                 type='text'
                                 onChange={this.onChangeCountries}
+                                onBlur={this.onBlurCountryField}
                             />
                         </div>
                     </div>
