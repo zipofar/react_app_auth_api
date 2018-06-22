@@ -9,7 +9,7 @@ export const countries = (state = [], action) => {
     }
 };
 
-export const stateProcessLoadCountries = (state = '', action) => {
+export const processLoadCountries = (state = '', action) => {
     switch (action.type) {
         case 'LOAD_COUNTRIES_SUCCESS':
             return 'success';

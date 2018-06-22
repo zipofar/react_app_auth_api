@@ -2,7 +2,7 @@ import { combineReducers } from 'redux';
 import { news, processLoadNews } from './news';
 import { processLoadProfile, processUpdateProfile } from "./profile";
 import { reducer as formReducer } from 'redux-form';
-import { countries, stateProcessLoadCountries } from "./listCountries";
+import { countries, processLoadCountries } from "./listCountries";
 
 const isLogin = (state = false, action) => {
 	switch (action.type) {
@@ -77,5 +77,5 @@ export default combineReducers({
     processUpdateProfile,
     form: formReducer,
     countries,
-    stateProcessLoadCountries,
+    processLoadCountries,
 });

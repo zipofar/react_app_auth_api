@@ -98,7 +98,6 @@ class ProfileEditForm extends React.Component
         if (this.props.processUpdateProfile === 'request' || this.props.processLoadProfile === 'request') {
             return <Loader />;
         }
-
         return(
             <div className='container form'>
                 <form onSubmit={this.props.handleSubmit(this.saveProfile)} autoComplete='off'>
@@ -157,7 +156,9 @@ class ProfileEditForm extends React.Component
                         <div className="col-sm-12 col-md-2 label">
                             <label>Country:</label>
                         </div>
-                        <div className="col-sm-12 col-md">
+                        <div className="col-sm-12 col-md loader-input">
+                            {this.props.processLoadCountries === 'request' && <div className="spinner search-field"></div>}
+
                             <Field
                                 name='country'
                                 component='input'

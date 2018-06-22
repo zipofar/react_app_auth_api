@@ -12,6 +12,7 @@ const mapStateToProps = (state) => {
        profile: state.profile,
        processLoadProfile: state.processLoadProfile,
        countries: state.countries,
+       processLoadCountries: state.processLoadCountries,
    };
 };
 
