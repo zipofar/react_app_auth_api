@@ -43,7 +43,7 @@ class ProfileEditForm extends React.Component
                         <label>Errors:</label>
                     </div>
                     <div className="col-sm-12 col-md">
-                        <div className="card error" style={{'margin-left': '4px'}}>
+                        <div className="card error" style={{'marginLeft': '4px'}}>
                             <ul>
                                 { this.props.networkErrors.map((err, i) => {
                                     return  <li key={i}>{err}</li>
@@ -131,7 +131,7 @@ class ProfileEditForm extends React.Component
                             <label>Name:</label>
                         </div>
                         <div className="col-sm-12 col-md">
-                            <Field name='name' component='input' type='text' className='input-text'/>
+                            <Field name='name' component={renderField} type='text' className='input-text'/>
                         </div>
                     </div>
                     <div className="row responsive-label">
@@ -139,7 +139,7 @@ class ProfileEditForm extends React.Component
                             <label>Email:</label>
                         </div>
                         <div className="col-sm-12 col-md">
-                            <Field name='email' component='input' type='text' className='input-text' />
+                            <Field name='email' component={renderField} type='text' className='input-text' />
                         </div>
                     </div>
                     <div className="row responsive-label">
@@ -205,4 +205,30 @@ class ProfileEditForm extends React.Component
     }
 }
 
-export default reduxForm({ form: 'profileEditForm' })(ProfileEditForm);
+const validateForm = (values) => {
+    const errors = {};
+    if (!values.name) {
+        errors.name = 'Required';
+    }
+    if (!values.email) {
+        errors.email = 'Required'
+    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
+        errors.email = 'Invalid email address'
+    }
+    return errors;
+};
+
+const renderField = ({ input, label, type, meta: { touched, error, warning } }) => {
+    return(
+        <div>
+            <div>
+                <input {...input} type={type}/>
+            </div>
+            <div>
+                {touched && (error && <span className='error-input'>{error}</span>)}
+            </div>
+        </div>
+    );
+};
+
+export default reduxForm({ form: 'profileEditForm', validate: validateForm })(ProfileEditForm);
