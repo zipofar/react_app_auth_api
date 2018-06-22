@@ -21,63 +21,64 @@ export default class Profile extends React.Component {
 		return(
             <div>
                 <div className="row responsive-label">
-                    <div className="col-sm-1 label">
+                    <div className="col-sm col-md-2 label">
                         <label>Avatar:</label>
                     </div>
-                    <div className="col-sm-11">
-                        <img src={this.props.profile.file_path_avatar} alt={'avatar'} height={'100'} width={'100'}/>
+                    <div className="col-sm col-md">
+                        <p><img src={this.props.profile.file_path_avatar} alt={'avatar'} height={'100'} width={'100'}/></p>
                     </div>
                 </div>
                 <div className="row responsive-label">
-                    <div className="col-sm-1 label">
+                    <div className="col-sm col-md-2 label">
                         <label>Name:</label>
                     </div>
-                    <div className="col-sm-11">
+                    <div className="col-sm col-md">
                         <p>{this.props.profile.name}</p>
                     </div>
                 </div>
                 <div className="row responsive-label">
-                    <div className="col-sm-1 label">
+                    <div className="col-sm col-md-2 label">
                         <label>Email:</label>
                     </div>
-                    <div className="col-sm-11">
+                    <div className="col-sm col-md">
                         <p>{this.props.profile.email}</p>
                     </div>
                 </div>
                 <div className="row responsive-label">
-                    <div className="col-sm-1 label">
+                    <div className="col-sm col-md-2 label">
                         <label>Birthday:</label>
                     </div>
-                    <div className="col-sm-11">
+                    <div className="col-sm col-md">
                         <p>{this.props.profile.birthday}</p>
                     </div>
                 </div>
                 <div className="row responsive-label">
-                    <div className="col-sm-1 label">
+                    <div className="col-sm col-md-2 label">
                         <label>Country:</label>
                     </div>
-                    <div className="col-sm-11">
-                        {this.props.profile.country}
+                    <div className="col-sm col-md">
+                        <p>{this.props.profile.country}</p>
                     </div>
                 </div>
                 <div className="row responsive-label">
-                    <div className="col-sm-1 label">
+                    <div className="col-sm col-md-2 label">
                         <label>Sex:</label>
                     </div>
-                    <div className="col-sm-11">
-                        {this.props.profile.sex}
+                    <div className="col-sm col-md">
+                        <p>{this.props.profile.sex}</p>
                     </div>
                 </div>
                 <div className="row responsive-label">
-                    <div className="col-sm-1 label">
+                    <div className="col-sm col-md-2 label">
                         <label>About:</label>
                     </div>
-                    <div className="col-sm-11">
-                        {this.props.profile.about}
+                    <div className="col-sm col-md">
+                        <p>{this.props.profile.about}</p>
                     </div>
                 </div>
                 <div className="row responsive-label">
-                    <div className="col-sm-11 col-sm-offset-1">
+                    <div className='col-sm col-md-2 label'></div>
+                    <div className="col-sm col-md">
                         <Link to='/profile/edit'>
                             <button>Edit</button>
                         </Link>

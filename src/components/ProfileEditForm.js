@@ -2,7 +2,7 @@ import React from 'react';
 import { reduxForm, Field } from 'redux-form';
 import Loader from '../components/Loader';
 import Birthday from './ProfileEditForm/Birthday'
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 
 class ProfileEditForm extends React.Component
 {
@@ -38,9 +38,12 @@ class ProfileEditForm extends React.Component
 
         if (processUpdateProfile === 'failure' || processLoadProfile === 'failure') {
             return(
-                <div className="row">
-                    <div className="col-sm-11 col-sm-offset-1">
-                        <div className="card error">
+                <div className="row responsive-label">
+                    <div className='col-sm-12 col-md-2 label'>
+                        <label>Errors:</label>
+                    </div>
+                    <div className="col-sm-12 col-md">
+                        <div className="card error" style={{'margin-left': '4px'}}>
                             <ul>
                                 { this.props.networkErrors.map((err, i) => {
                                     return  <li key={i}>{err}</li>
@@ -60,7 +63,7 @@ class ProfileEditForm extends React.Component
     };
 
     onBlurCountryField = () => {
-        setTimeout(this.props.clearListCountries.bind(this), 1);
+        setTimeout(this.props.clearListCountries.bind(this), 100);
     };
 
     onSelectCountry = (value) => (e) => {
@@ -69,15 +72,15 @@ class ProfileEditForm extends React.Component
     };
 
     showCountriesList = () => {
-
-        if (this.props.countries.count === 0) {
+        if (this.props.countries.length === 0) {
             return null;
         }
 
         return(
             <div className="row responsive-label">
-                <div className="col-sm-11 col-sm-offset-1">
-                    <nav>
+                <div className='col-sm-12 col-md-2 label'></div>
+                <div className="col-sm-12 col-md">
+                    <nav className='search-selector'>
                         { this.props.countries.map((item, i) => {
                             return <a onClick={this.onSelectCountry(item)} href="#" key={i}>{item}</a>;
                         }) }
@@ -97,82 +100,102 @@ class ProfileEditForm extends React.Component
         }
 
         return(
-            <div>
+            <div className='container form'>
                 <form onSubmit={this.props.handleSubmit(this.saveProfile)} autoComplete='off'>
                     <div className="row responsive-label">
-                        <div className="col-sm-1 label">
+                        <div className="col-sm-12 col-md-2 label">
                             <label>Avatar:</label>
                         </div>
-                        <div className="col-sm-11">
+                        <div className="col-sm-12 col-md">
                             <img src={this.props.initialValues.file_path_avatar} alt={'avatar'} height={'100'} width={'100'}/>
-                            <br />
-                            <input type='file' name='avatar' ref={(node) => this.uploadAvatar = node} />
+                        </div>
+                    </div>
+                    <div className='row responsive-label'>
+                        <div className="col-sm-12 col-md-2 label"></div>
+                        <div className="col-sm-12 col-md">
+                            <input
+                                type='file'
+                                name='avatar'
+                                ref={(node) => this.uploadAvatar = node}
+                                id="file-input"
+                                style={{display: 'none'}}
+                            />
+                            <label
+                                htmlFor="file-input"
+                                className="button"
+                                style={{marginLeft: '4px'}}
+                            >Upload file</label>
                         </div>
                     </div>
                     <div className="row responsive-label">
-                        <div className="col-sm-1 label">
+                        <div className="col-sm-12 col-md-2 label">
                             <label>Name:</label>
                         </div>
-                        <div className="col-sm-11">
-                            <Field name='name' component='input' type='text' />
+                        <div className="col-sm-12 col-md">
+                            <Field name='name' component='input' type='text' className='input-text'/>
                         </div>
                     </div>
                     <div className="row responsive-label">
-                        <div className="col-sm-1 label">
+                        <div className="col-sm-12 col-md-2 label">
                             <label>Email:</label>
                         </div>
-                        <div className="col-sm-11">
-                            <Field name='email' component='input' type='text' />
+                        <div className="col-sm-12 col-md">
+                            <Field name='email' component='input' type='text' className='input-text' />
                         </div>
                     </div>
                     <div className="row responsive-label">
-                        <div className="col-sm-1 label">
+                        <div className="col-sm-12 col-md-2 label">
                             <label>Birthday:</label>
                         </div>
-                        <div className="col-sm-11">
+                        <div className="col-sm-12 col-md">
                             <Birthday updateBirthday={(birthday) => this.props.updateProfileLocal({ birthday, })}>
                                 {this.props.initialValues.birthday}
                              </Birthday>
                         </div>
                     </div>
                     <div className="row responsive-label">
-                        <div className="col-sm-1 label">
+                        <div className="col-sm-12 col-md-2 label">
                             <label>Country:</label>
                         </div>
-                        <div className="col-sm-11">
+                        <div className="col-sm-12 col-md">
                             <Field
                                 name='country'
                                 component='input'
                                 type='text'
                                 onChange={this.onChangeCountries}
                                 onBlur={this.onBlurCountryField}
+                                className='input-text'
                             />
                         </div>
                     </div>
                     { this.showCountriesList() }
                     <div className="row responsive-label">
-                        <div className="col-sm-1 label">
+                        <div className="col-sm-12 col-md-2 label">
                             <label>Sex:</label>
                         </div>
-                        <div className="col-sm-11">
-                            <label><Field name="sex" component="input" type="radio" value="male" /> Male</label>
-                            <label><Field name="sex" component="input" type="radio" value="female"/> Female</label>
+                        <div className="col-sm-12 col-md responsive-label">
+                            <Field name="sex" component="input" type="radio" value="male" /><label>Male</label>
+                            <Field name="sex" component="input" type="radio" value="female"/><label>Female</label>
                         </div>
                     </div>
                     <div className="row responsive-label">
-                        <div className="col-sm-1 label">
+                        <div className="col-sm-12 col-md-2 label">
                             <label>About:</label>
                         </div>
-                        <div className="col-sm-11">
-                            <Field name='about' component='textarea' type='text' />
+                        <div className="col-sm-12 col-md">
+                            <Field name='about' component='textarea' type='text' className='input-text' />
                         </div>
                     </div>
 
                     { this.showPanelError() }
 
                     <div className="row responsive-label">
-                        <div className="col-sm-11 col-sm-offset-1">
-                            <button type='submit'>Save</button>
+                        <div className="col-sm-12 col-md-2 label"></div>
+                        <div className="col-sm-12 col-md">
+                            <button type='submit' style={{marginLeft: '4px'}}>Save</button>
+                            <Link to='/profile'>
+                                <button>Cancel</button>
+                            </Link>
                         </div>
                     </div>
                 </form>

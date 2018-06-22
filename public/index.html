@@ -8,9 +8,10 @@
    	<style>
 		.responsive-label {
 			align-items: center;
+            display: flex;
 		}
 		.responsive-label > .label {
-			text-align: right;
+			max-width: 7em;
 		}
         .modal-div {
             z-index: 1200;
@@ -27,6 +28,23 @@
             left: 50%;
             width: 5em;
             height: 5em;
+        }
+
+        .container.form {
+            margin: auto;
+            max-width: 768px;
+            min-width: 290px;
+        }
+
+        .input-text {
+            width: 100%;
+        }
+
+        nav.search-selector {
+            position: absolute;
+            margin-top: -4px;
+            margin-left: 4px;
+            z-index: 2000;
         }
 	</style>
     <title>React App</title>
