@@ -3,27 +3,27 @@ import { Redirect, Link } from 'react-router-dom';
 
 export default class Login extends React.Component {
 
-	state = { email: '', password: '' }
+	state = { email: '', password: '' };
 
 	handleSubmit = (e) => {
 		e.preventDefault();
         const { email, password } = this.state;
 		this.props.checkLoginPass({ email, password }, () => this.setState({ password: '' }));
-	}
+	};
 
 	handleChange = (e) => {
 		this.setState({ [e.target.name]: e.target.value });
-	}
+	};
 
 	showPanelWrongPassword = () => {
 		return(
 		    <div className="row">
 			    <div className="card error">
-				    {this.props.authErrors.map((err, i) => <p key={i}>{err}</p>)}
+				    {this.props.networkErrors.map((err, i) => <p key={i}>{err}</p>)}
 				</div>
 			</div>
 		);
-	}
+	};
 
 	render() {
         const { refferer } = this.props.location.state || { refferer: { pathname: '/' } };

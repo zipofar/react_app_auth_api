@@ -6,7 +6,7 @@ const mapStateToProps = state => {
 	return {
 		isLogin: state.isLogin,
         stateProcessLogin: state.stateProcessLogin,
-        authErrors: state.authErrors,
+        networkErrors: state.networkErrors,
 	};
 };
 
