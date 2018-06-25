@@ -19,71 +19,73 @@ export default class Profile extends React.Component {
         }
 
 		return(
-            <div>
-                <div className="row responsive-label">
-                    <div className="col-sm col-md-2 label">
-                        <label>Avatar:</label>
+            <div className='container form'>
+                <form>
+                    <div className="row responsive-label">
+                        <div className="col-sm col-md-2 label">
+                            <label>Avatar:</label>
+                        </div>
+                        <div className="col-sm col-md">
+                            <p><img src={this.props.profile.file_path_avatar} alt={'avatar'} height={'100'} width={'100'}/></p>
+                        </div>
                     </div>
-                    <div className="col-sm col-md">
-                        <p><img src={this.props.profile.file_path_avatar} alt={'avatar'} height={'100'} width={'100'}/></p>
+                    <div className="row responsive-label">
+                        <div className="col-sm col-md-2 label">
+                            <label>Name:</label>
+                        </div>
+                        <div className="col-sm col-md">
+                            <p>{this.props.profile.name}</p>
+                        </div>
                     </div>
-                </div>
-                <div className="row responsive-label">
-                    <div className="col-sm col-md-2 label">
-                        <label>Name:</label>
+                    <div className="row responsive-label">
+                        <div className="col-sm col-md-2 label">
+                            <label>Email:</label>
+                        </div>
+                        <div className="col-sm col-md">
+                            <p>{this.props.profile.email}</p>
+                        </div>
                     </div>
-                    <div className="col-sm col-md">
-                        <p>{this.props.profile.name}</p>
+                    <div className="row responsive-label">
+                        <div className="col-sm col-md-2 label">
+                            <label>Birthday:</label>
+                        </div>
+                        <div className="col-sm col-md">
+                            <p>{this.props.profile.birthday}</p>
+                        </div>
                     </div>
-                </div>
-                <div className="row responsive-label">
-                    <div className="col-sm col-md-2 label">
-                        <label>Email:</label>
+                    <div className="row responsive-label">
+                        <div className="col-sm col-md-2 label">
+                            <label>Country:</label>
+                        </div>
+                        <div className="col-sm col-md">
+                            <p>{this.props.profile.country}</p>
+                        </div>
                     </div>
-                    <div className="col-sm col-md">
-                        <p>{this.props.profile.email}</p>
+                    <div className="row responsive-label">
+                        <div className="col-sm col-md-2 label">
+                            <label>Sex:</label>
+                        </div>
+                        <div className="col-sm col-md">
+                            <p>{this.props.profile.sex}</p>
+                        </div>
                     </div>
-                </div>
-                <div className="row responsive-label">
-                    <div className="col-sm col-md-2 label">
-                        <label>Birthday:</label>
+                    <div className="row responsive-label">
+                        <div className="col-sm col-md-2 label">
+                            <label>About:</label>
+                        </div>
+                        <div className="col-sm col-md">
+                            <p>{this.props.profile.about}</p>
+                        </div>
                     </div>
-                    <div className="col-sm col-md">
-                        <p>{this.props.profile.birthday}</p>
+                    <div className="row responsive-label">
+                        <div className='col-sm col-md-2 label'></div>
+                        <div className="col-sm col-md">
+                            <Link to='/profile/edit'>
+                                <button>Edit</button>
+                            </Link>
+                        </div>
                     </div>
-                </div>
-                <div className="row responsive-label">
-                    <div className="col-sm col-md-2 label">
-                        <label>Country:</label>
-                    </div>
-                    <div className="col-sm col-md">
-                        <p>{this.props.profile.country}</p>
-                    </div>
-                </div>
-                <div className="row responsive-label">
-                    <div className="col-sm col-md-2 label">
-                        <label>Sex:</label>
-                    </div>
-                    <div className="col-sm col-md">
-                        <p>{this.props.profile.sex}</p>
-                    </div>
-                </div>
-                <div className="row responsive-label">
-                    <div className="col-sm col-md-2 label">
-                        <label>About:</label>
-                    </div>
-                    <div className="col-sm col-md">
-                        <p>{this.props.profile.about}</p>
-                    </div>
-                </div>
-                <div className="row responsive-label">
-                    <div className='col-sm col-md-2 label'></div>
-                    <div className="col-sm col-md">
-                        <Link to='/profile/edit'>
-                            <button>Edit</button>
-                        </Link>
-                    </div>
-                </div>
+                </form>
             </div>
 		);
 	}
