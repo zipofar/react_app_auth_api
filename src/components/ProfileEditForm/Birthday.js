@@ -22,7 +22,8 @@ export default class Birthday extends React.Component
 
     onBlurElement = () => {
         const { year, month, day } = this.state;
-        const normalizedDate = [year, this.monthNames.indexOf(month) + 1, day].join('-');
+        const numMonth = this.monthNames.indexOf(month) + 1;
+        const normalizedDate = [year, numMonth, day].join('-');
         this.props.updateBirthday(normalizedDate);
     };
 

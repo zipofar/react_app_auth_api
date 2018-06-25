@@ -23,9 +23,9 @@ class ProfileEditForm extends React.Component
         formData.append('name', values.name);
         formData.append('email', values.email);
         formData.append('birthday', values.birthday);
-        formData.append('country', values.country);
+        formData.append('country', values.country === '' ? 'NONE' : values.country);
         formData.append('sex', values.sex);
-        formData.append('about', values.about);
+        formData.append('about', values.about === '' ? 'NONE' : values.about);
         formData.append('avatar', this.uploadAvatar.files[0]);
         formData.append('api_token', this.props.initialValues.api_token);
         formData.append('id', this.props.initialValues.id);
