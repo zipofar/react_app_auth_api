@@ -1,25 +1,23 @@
 import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
+import { reduxForm, Field } from "redux-form";
+import { validateFormProfile } from '../helpers/validators';
 
-export default class Login extends React.Component {
+class Login extends React.Component {
 
-	state = { email: '', password: '' };
-
-	handleSubmit = (e) => {
-		e.preventDefault();
-        const { email, password } = this.state;
+    submitLoginPass = (values) => {
+        const { email, password } = values;
 		this.props.checkLoginPass({ email, password }, () => this.setState({ password: '' }));
-	};
-
-	handleChange = (e) => {
-		this.setState({ [e.target.name]: e.target.value });
 	};
 
 	showPanelWrongPassword = () => {
 		return(
-		    <div className="row">
-			    <div className="card error">
-				    {this.props.networkErrors.map((err, i) => <p key={i}>{err}</p>)}
+            <div className="row responsive-label">
+                <div className="col-sm-12 col-md-2 label"></div>
+                <div className="col-sm-12 col-md">
+					<div className="card fluid error">
+						{this.props.networkErrors.map((err, i) => <p key={i}>{err}</p>)}
+					</div>
 				</div>
 			</div>
 		);
@@ -33,34 +31,60 @@ export default class Login extends React.Component {
         }
 
 		return(
-			<div>
-				<form onSubmit={this.handleSubmit}>
-                    <label>Email:</label>
-                    <input
-                        type="text"
-                        name="email"
-                        onChange={this.handleChange}
-                        value={this.state.email}
-                    />
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        name="password"
-                        onChange={this.handleChange}
-                        value={this.state.password}
-                    />
-					<input
-                        type="submit"
-                        value="Login"
-                        disabled={this.props.stateProcessLogin === 'request'}
-                    />
-            
-                    <div className="row">
-                        <Link to={'/registration'}>Регистрация</Link>
-                    </div>
+			<div className='container form'>
+				<form onSubmit={this.props.handleSubmit(this.submitLoginPass)}>
+                    <Field name='email' component={renderField} type='text' className='input-text' label='Email'/>
+                    <Field name='password' component={renderField} type='password' className='input-text' label='Password'/>
+
+					{this.props.stateProcessLogin === 'failure' && this.showPanelWrongPassword()}
+
+                    <div className="row responsive-label">
+                        <div className="col-sm-12 col-md-2 label"></div>
+                        <div className="col-sm-12 col-md">
+							<input
+								type="submit"
+								value="Login"
+								disabled={this.props.stateProcessLogin === 'request'}
+							/>
+						</div>
+					</div>
+
+                    <div className="row responsive-label">
+                        <div className="col-sm-12 col-md-2 label"></div>
+                        <div className="col-sm-12 col-md">
+							<Link to={'/registration'}>Регистрация</Link>
+						</div>
+					</div>
 				</form>
-				{this.props.stateProcessLogin === 'failure' && this.showPanelWrongPassword()}
 			</div>
 		);
 	}
 }
+
+const renderField = ({ input, label, type, meta: { touched, error, warning } }) => {
+    return(
+    	<div>
+			<div className="row responsive-label">
+				<div className="col-sm-12 col-md-2 label">
+					<label>{label}</label>
+				</div>
+                <div className="col-sm-12 col-md">
+					<input {...input} type={type} className='input-text' />
+				</div>
+			</div>
+
+            <div className="row responsive-label">
+				<div className="col-sm-12 col-md-2 label"></div>
+                <div className="col-sm-12 col-md">
+                	{touched && (error &&
+						<span className='error-input'>
+							<span className="icon-alert"></span>
+							{error}
+						</span>)}
+				</div>
+            </div>
+		</div>
+    );
+};
+
+export default reduxForm({ form: 'login', validate: validateFormProfile })(Login);

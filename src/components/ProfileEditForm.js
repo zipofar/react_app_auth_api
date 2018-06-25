@@ -3,6 +3,7 @@ import { reduxForm, Field } from 'redux-form';
 import Loader from '../components/Loader';
 import Birthday from './ProfileEditForm/Birthday'
 import { Redirect, Link } from 'react-router-dom';
+import { validateFormProfile } from '../helpers/validators';
 
 class ProfileEditForm extends React.Component
 {
@@ -126,22 +127,10 @@ class ProfileEditForm extends React.Component
                             >Upload file</label>
                         </div>
                     </div>
-                    <div className="row responsive-label">
-                        <div className="col-sm-12 col-md-2 label">
-                            <label>Name:</label>
-                        </div>
-                        <div className="col-sm-12 col-md">
-                            <Field name='name' component={renderField} type='text' className='input-text'/>
-                        </div>
-                    </div>
-                    <div className="row responsive-label">
-                        <div className="col-sm-12 col-md-2 label">
-                            <label>Email:</label>
-                        </div>
-                        <div className="col-sm-12 col-md">
-                            <Field name='email' component={renderField} type='text' className='input-text' />
-                        </div>
-                    </div>
+
+                    <Field name='email' component={renderField} type='text' className='input-text' label='Email:'/>
+                    <Field name='name' component={renderField} type='text' className='input-text' label='Name:'/>
+
                     <div className="row responsive-label">
                         <div className="col-sm-12 col-md-2 label">
                             <label>Birthday:</label>
@@ -205,30 +194,30 @@ class ProfileEditForm extends React.Component
     }
 }
 
-const validateForm = (values) => {
-    const errors = {};
-    if (!values.name) {
-        errors.name = 'Required';
-    }
-    if (!values.email) {
-        errors.email = 'Required'
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-        errors.email = 'Invalid email address'
-    }
-    return errors;
-};
-
 const renderField = ({ input, label, type, meta: { touched, error, warning } }) => {
     return(
         <div>
-            <div>
-                <input {...input} type={type}/>
+            <div className="row responsive-label">
+                <div className="col-sm-12 col-md-2 label">
+                    <label>{label}</label>
+                </div>
+                <div className="col-sm-12 col-md">
+                    <input {...input} type={type} className='input-text' />
+                </div>
             </div>
-            <div>
-                {touched && (error && <span className='error-input'>{error}</span>)}
+
+            <div className="row responsive-label">
+                <div className="col-sm-12 col-md-2 label"></div>
+                <div className="col-sm-12 col-md">
+                    {touched && (error &&
+                        <span className='error-input'>
+							<span className="icon-alert"></span>
+                            {error}
+						</span>)}
+                </div>
             </div>
         </div>
     );
 };
 
-export default reduxForm({ form: 'profileEditForm', validate: validateForm })(ProfileEditForm);
+export default reduxForm({ form: 'profileEditForm', validate: validateFormProfile })(ProfileEditForm);
