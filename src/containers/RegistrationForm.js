@@ -1,6 +1,7 @@
 import { connect } from 'react-redux';
 import RegistrationForm from '../components/RegistrationForm';
 import * as actions from '../actions';
+import { removeNetErrors } from '../actions/helpers/handlerErrors';
 
 const mapStateToProps = state => {
 	return {
@@ -10,6 +11,11 @@ const mapStateToProps = state => {
 	};
 };
 
-const container = connect(mapStateToProps, actions)(RegistrationForm);
+const mapDispatchToProps = {
+    ...actions,
+    removeNetErrors,
+};
+
+const container = connect(mapStateToProps, mapDispatchToProps)(RegistrationForm);
 
 export default container;

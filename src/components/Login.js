@@ -5,12 +5,21 @@ import { validateFormProfile } from '../helpers/validators';
 
 class Login extends React.Component {
 
+    componentWillUnmount = () => {
+        this.props.removeNetErrors();
+    };
+
     submitLoginPass = (values) => {
         const { email, password } = values;
 		this.props.checkLoginPass({ email, password }, () => this.setState({ password: '' }));
 	};
 
 	showPanelWrongPassword = () => {
+
+		if (this.props.networkErrors.length === 0) {
+			return null;
+		}
+
 		return(
             <div className="row responsive-label">
                 <div className="col-sm-12 col-md-2 label"></div>

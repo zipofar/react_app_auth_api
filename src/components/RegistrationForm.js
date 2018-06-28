@@ -1,13 +1,17 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
+import { reduxForm, Field } from 'redux-form';
+import { validateFormProfile } from '../helpers/validators';
+import Loader from '../components/Loader';
 
-export default class RegistrationForm extends React.Component {
+class RegistrationForm extends React.Component {
 
-	state = { name: '', email: '', password: '' }
+    componentWillUnmount = () => {
+        this.props.removeNetErrors();
+    };
 
-	handleSubmit = (e) => {
-		e.preventDefault();
-        const { name, email, password } = this.state;
+	handleSubmit = (values) => {
+        const { name, email, password } = values;
         this.props.register({ name, email, password });
 	};
 
@@ -16,10 +20,16 @@ export default class RegistrationForm extends React.Component {
 	};
 
 	showPanelError = () => {
+
+		if (this.props.networkErrors.length === 0) {
+            return null;
+        }
+
 		return(
-		    <div className="row">
-				<div className="col-sm-11 col-sm-offset-1">
-			        <div className="card error">
+            <div className="row responsive-label">
+                <div className="col-sm-12 col-md-2 label"></div>
+                <div className="col-sm-12 col-md">
+                    <div className="card fluid error">
                         <ul>
                         { this.props.networkErrors.map((err, i) => {
                             return  <li key={i}>{err}</li>
@@ -36,56 +46,23 @@ export default class RegistrationForm extends React.Component {
             return <Redirect to="/" />
         }
 
+        if (this.props.stateProcessRegister === 'request') {
+        	return <Loader/>
+		}
+
 		return(
-			<div>
-				<form onSubmit={this.handleSubmit}>
+            <div className='container form'>
+                <form onSubmit={this.props.handleSubmit(this.handleSubmit)}>
 
-					<div className="row responsive-label">
-						<div className="col-sm-1 label">
-							<label>Имя:</label>
-						</div>
-						<div className="col-sm-11">
-							<input
-								type="text"
-								name="name"
-								onChange={this.handleChange}
-								value={this.state.name}
-							/>
-						</div>
-                    </div>
+                    <Field name='name' component={renderField} type='text' className='input-text' label='Name'/>
+                    <Field name='email' component={renderField} type='text' className='input-text' label='Email'/>
+                    <Field name='password' component={renderField} type='password' className='input-text' label='Password'/>
 
-                    <div className="row responsive-label">
-						<div className="col-sm-1 label">
-							<label>Email:</label>
-						</div>
-						<div className="col-sm-11">
-							<input
-								type="text"
-								name="email"
-								onChange={this.handleChange}
-								value={this.state.email}
-							/>
-						</div>
-                    </div>
-
-					<div className="row responsive-label">
-						<div className="col-sm-1 label">
-                    		<label>Пароль:</label>
-						</div>
-						<div className="col-sm-11">
-							<input
-								type="password"
-								name="password"
-								onChange={this.handleChange}
-								value={this.state.password}
-							/>
-						</div>
-					</div>
-                    
                     { this.props.stateProcessRegister === 'failure' && this.showPanelError() }
 
-					<div className="row">
-						<div className="col-sm-11 col-sm-offset-1">
+                    <div className="row responsive-label">
+						<div className="col-sm-12 col-md-2 label"></div>
+                        <div className="col-sm-12 col-md">
 							<input
                                 type="submit"
                                 value="Зарегистрироваться"
@@ -98,3 +75,31 @@ export default class RegistrationForm extends React.Component {
 		);
 	};
 }
+
+const renderField = ({ input, label, type, meta: { touched, error, warning } }) => {
+    return(
+        <div>
+            <div className="row responsive-label">
+                <div className="col-sm-12 col-md-2 label">
+                    <label>{label}</label>
+                </div>
+                <div className="col-sm-12 col-md">
+                    <input {...input} type={type} className='input-text' />
+                </div>
+            </div>
+
+            <div className="row responsive-label">
+                <div className="col-sm-12 col-md-2 label"></div>
+                <div className="col-sm-12 col-md">
+                    {touched && (error &&
+                        <span className='error-input'>
+							<span className="icon-alert"></span>
+                            {error}
+						</span>)}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+export default reduxForm({ form: 'registrationForm', validate: validateFormProfile })(RegistrationForm);
