@@ -17,7 +17,12 @@ export const validateFormProfile = (values) => {
 };
 
 const isInvalidDate = (date) => {
-    if (isNaN(new Date(date).getDate())) {
+
+    if (date === null) {
+        return false;
+    }
+
+    if (!/^\d\d\d\d-\d{1,2}-\d{1,2}$/i.test(date)) {
         return true;
     }
 

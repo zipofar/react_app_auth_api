@@ -22,7 +22,7 @@ class ProfileEditForm extends React.Component
         let formData = new FormData();
         formData.append('name', values.name);
         formData.append('email', values.email);
-        formData.append('birthday', values.birthday);
+        formData.append('birthday', values.birthday === null ? 'NONE' : values.birthday);
         formData.append('country', values.country === '' ? 'NONE' : values.country);
         formData.append('sex', values.sex);
         formData.append('about', values.about === '' ? 'NONE' : values.about);
@@ -98,7 +98,7 @@ class ProfileEditForm extends React.Component
 
         if (this.props.processUpdateProfile === 'request' || this.props.processLoadProfile === 'request') {
             return <Loader />;
-        }
+        } 
         return(
             <div className='container form'>
                 <form onSubmit={this.props.handleSubmit(this.saveProfile)} autoComplete='off'>
@@ -131,16 +131,14 @@ class ProfileEditForm extends React.Component
                     <Field name='email' component={renderField} type='text' className='input-text' label='Email:'/>
                     <Field name='name' component={renderField} type='text' className='input-text' label='Name:'/>
 
-                    <div className="row responsive-label">
-                        <div className="col-sm-12 col-md-2 label">
-                            <label>Birthday:</label>
-                        </div>
-                        <div className="col-sm-12 col-md">
-                            <Birthday updateBirthday={(birthday) => this.props.updateProfileLocal({ birthday, })}>
-                                {this.props.initialValues.birthday}
-                             </Birthday>
-                        </div>
-                    </div>
+
+
+                    <Birthday
+                        updateBirthday={(birthday) => this.props.updateProfileLocal({ birthday, })}
+                        initBirthday = {this.props.initialValues.birthday}
+                    />
+                    <Field name='birthday' component={renderHiddenField} type='hidden' className='input-text' />
+
                     <div className="row responsive-label">
                         <div className="col-sm-12 col-md-2 label">
                             <label>Country:</label>
@@ -201,6 +199,30 @@ const renderField = ({ input, label, type, meta: { touched, error, warning } }) 
                 <div className="col-sm-12 col-md-2 label">
                     <label>{label}</label>
                 </div>
+                <div className="col-sm-12 col-md">
+                    <input {...input} type={type} className='input-text' />
+                </div>
+            </div>
+
+            <div className="row responsive-label">
+                <div className="col-sm-12 col-md-2 label"></div>
+                <div className="col-sm-12 col-md">
+                    {touched && (error &&
+                        <span className='error-input'>
+							<span className="icon-alert"></span>
+                            {error}
+						</span>)}
+                </div>
+            </div>
+        </div>
+    );
+};
+
+const renderHiddenField = ({ input, label, type, meta: { touched, error, warning } }) => {
+    return(
+        <div>
+            <div className="row responsive-label">
+                <div className="col-sm-12 col-md-2 label"></div>
                 <div className="col-sm-12 col-md">
                     <input {...input} type={type} className='input-text' />
                 </div>

@@ -8,9 +8,9 @@ export default class Birthday extends React.Component
 
         const birthday = { year: '', month: '', day: '' };
 
-        if (props.children !== 'undefined' && props.children !== null) {
+        if (props.initBirthday !== 'undefined' && props.initBirthday !== null) {
 
-            const dateBirthday = new Date(props.children);
+            const dateBirthday = new Date(props.initBirthday);
             birthday['year'] = dateBirthday.getFullYear();
             birthday['month'] = this.monthNames[dateBirthday.getMonth()];
             birthday['day'] = dateBirthday.getDate();
@@ -18,7 +18,6 @@ export default class Birthday extends React.Component
 
         this.state = { ...birthday };
     }
-
 
     onChangeElement = (e) => {
         this.setState({ [e.target.name]: e.target.value });
@@ -29,7 +28,11 @@ export default class Birthday extends React.Component
         const { year, month, day } = this.state;
         const numMonth = this.monthNames.indexOf(month) + 1;
         const normalizedDate = [year, numMonth, day].join('-');
-        this.props.updateBirthday(normalizedDate);
+        if (normalizedDate === 'Year-0-Day') {
+            this.props.updateBirthday(null);
+        } else {
+            this.props.updateBirthday(normalizedDate);
+        }
     };
 
     showDays = () => {
@@ -82,10 +85,15 @@ export default class Birthday extends React.Component
     render()
     {
         return(
-            <div>
-                { this.showDays() }
-                { this.showMonths() }
-                { this.showYears() }
+            <div className="row responsive-label">
+                <div className="col-sm-12 col-md-2 label">
+                    <label>Birthday:</label>
+                </div>
+                <div className="col-sm-12 col-md">
+                    { this.showDays() }
+                    { this.showMonths() }
+                    { this.showYears() }
+                </div>
             </div>
         );
     }
