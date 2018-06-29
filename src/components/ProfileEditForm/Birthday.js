@@ -6,7 +6,7 @@ export default class Birthday extends React.Component
 
         this.monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December',];
 
-        const birthday = { year: '', month: '', day: '' };
+        const birthday = { year: 'Year', month: 'Month', day: 'Day' };
 
         if (props.initBirthday !== 'undefined' && props.initBirthday !== null) {
 
@@ -20,19 +20,18 @@ export default class Birthday extends React.Component
     }
 
     onChangeElement = (e) => {
-        this.setState({ [e.target.name]: e.target.value });
+        this.setState({ [e.target.name]: e.target.value }, () => {this.props.updateBirthday(this.normalizeDate())});
     };
 
-
-    onBlurElement = () => {
+    normalizeDate = () => {
         const { year, month, day } = this.state;
+        if ( year === 'Year' && month === 'Month'  && day === 'Day') {
+            return null;
+        }
+
         const numMonth = this.monthNames.indexOf(month) + 1;
         const normalizedDate = [year, numMonth, day].join('-');
-        if (normalizedDate === 'Year-0-Day') {
-            this.props.updateBirthday(null);
-        } else {
-            this.props.updateBirthday(normalizedDate);
-        }
+        return normalizedDate;
     };
 
     showDays = () => {
@@ -42,7 +41,7 @@ export default class Birthday extends React.Component
         }
 
         return(
-            <select name='day' onChange={this.onChangeElement} onBlur={this.onBlurElement} value={this.state.day.toString()}>
+            <select name='day' onChange={this.onChangeElement} value={this.state.day.toString()}>
                 {days.map((num) => {
                     return <option key={num}>{num}</option>
                 })}
