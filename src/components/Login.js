@@ -2,6 +2,7 @@ import React from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import { reduxForm, Field } from "redux-form";
 import { validateFormProfile } from '../helpers/validators';
+import Loader from '../components/Loader';
 
 class Login extends React.Component {
 
@@ -39,7 +40,11 @@ class Login extends React.Component {
 			return <Redirect to={ refferer } />
         }
 
-		return(
+        if (this.props.stateProcessLogin === 'request') {
+            return <Loader />;
+        }
+
+        return(
 			<div className='container form'>
 				<form onSubmit={this.props.handleSubmit(this.submitLoginPass)}>
                     <Field name='email' component={renderField} type='text' className='input-text' label='Email'/>
