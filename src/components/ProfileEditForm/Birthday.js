@@ -3,15 +3,20 @@ export default class Birthday extends React.Component
 {
     constructor(props) {
         super(props);
-        const birthday = new Date(props.children);
 
         this.monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December',];
 
-        this.state = {
-            year: birthday.getFullYear(),
-            month: this.monthNames[birthday.getMonth()],
-            day: birthday.getDate(),
-        };
+        const birthday = { year: '', month: '', day: '' };
+
+        if (props.children !== 'undefined' && props.children !== null) {
+
+            const dateBirthday = new Date(props.children);
+            birthday['year'] = dateBirthday.getFullYear();
+            birthday['month'] = this.monthNames[dateBirthday.getMonth()];
+            birthday['day'] = dateBirthday.getDate();
+        }
+
+        this.state = { ...birthday };
     }
 
 
